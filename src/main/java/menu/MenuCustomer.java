@@ -63,7 +63,7 @@ public class MenuCustomer {
             }
         } else {
             System.out.println("\nNo customers registered\n");
-            menuOptions(input);
+            //menuOptions(input);
         }
     }
 
