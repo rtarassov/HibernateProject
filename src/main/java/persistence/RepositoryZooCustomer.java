@@ -91,7 +91,7 @@ public class RepositoryZooCustomer {
     public void updateZooCustomerToNotNew(int id) {
         try {
             entityManager.getTransaction().begin();
-            String sql = "UPDATE ZooCustomer SET isNew = :thisNew WHERE id = thisId";
+            String sql = "UPDATE ZooCustomer SET isNew = :thisNew WHERE id = :thisId";
             entityManager.createQuery(sql)
                     .setParameter("thisNew", false)
                     .setParameter("thisId", id)
