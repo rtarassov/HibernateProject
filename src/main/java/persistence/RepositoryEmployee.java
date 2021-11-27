@@ -119,4 +119,14 @@ public class RepositoryEmployee {
             entityManager.getTransaction().rollback();
         }
     }
+
+    public List<Employee> listEmployeesByTitle() {
+        List<Employee> list = null;
+        try {
+            list = entityManager.createQuery("FROM Employee ORDER BY title, salary ASC").getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

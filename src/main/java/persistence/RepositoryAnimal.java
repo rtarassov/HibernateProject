@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Animal;
+import model.Cage;
 import util.DBUtil;
 
 import javax.persistence.EntityManager;
@@ -73,18 +74,50 @@ public class RepositoryAnimal {
     }
 
     public void assignAnimaltoCage(int animalId, int cageId) {
-        String sql = "UPDATE Animal SET cage_id = :thisCageId WHERE id = :thisAnimalId";
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.createQuery(sql)
-                    .setParameter("thisCageId", cageId)
-                    .setParameter("thisAnimalId", animalId)
-                    .executeUpdate();
-            entityManager.getTransaction().commit();
-            System.out.println("Animal assigned to Cage.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            entityManager.getTransaction().rollback();
+        RepositoryCage repositoryCage = new RepositoryCage();
+
+        if (getAnimalsInCage(cageId) < repositoryCage.findCageById(cageId).getSize()) {
+            String sql = "UPDATE Animal SET cage_id = :thisCageId WHERE id = :thisAnimalId";
+            try {
+                entityManager.getTransaction().begin();
+                entityManager.createQuery(sql)
+                        .setParameter("thisCageId", cageId)
+                        .setParameter("thisAnimalId", animalId)
+                        .executeUpdate();
+                entityManager.getTransaction().commit();
+                System.out.println("Animal assigned to Cage.");
+                entityManager.clear();
+            } catch (Exception e) {
+                e.printStackTrace();
+                entityManager.getTransaction().rollback();
+            }
+        } else {
+            System.out.println("This cage is already full.");
         }
     }
+
+    public List<Animal> listAnimalsByCage() {
+        List<Animal> list = null;
+        try {
+            list = entityManager.createQuery("FROM Animal ORDER BY Cage ASC").getResultList();
+            entityManager.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int getAnimalsInCage(int cageId) {
+        List<Animal> list = null;
+        try {
+            list = entityManager.createQuery("FROM Animal WHERE cage_id = :thisId")
+                    .setParameter("thisId", cageId)
+                    .getResultList();
+            entityManager.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list.size();
+    }
+
 }

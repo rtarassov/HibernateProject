@@ -22,6 +22,8 @@ public class AnimalMenu {
         System.out.println("4: List all animals");
         System.out.println("5: Find animal by ID");
         System.out.println("6: Assign animal to cage");
+        System.out.println("7: List animals by cage");
+        System.out.println("8: Number of animals in cage");
         System.out.println("100 - Return to Main Menu");
         System.out.println("\n/***************************************************/");
         return input.nextInt();
@@ -50,6 +52,12 @@ public class AnimalMenu {
                     break;
                 case 6:
                     assignAnimalToCage(input);
+                    break;
+                case 7:
+                    listAnimalsByCage();
+                    break;
+                case 8:
+                    getAnimalsInCage(input);
                     break;
                 case 100:
                     MainMenu.getMainMenu();
@@ -221,7 +229,22 @@ public class AnimalMenu {
             }
             System.out.println("Try again, enter only numbers.");
         }
-
         repositoryAnimal.assignAnimaltoCage(animalId, cageId);
+    }
+
+    public void listAnimalsByCage() {
+        System.out.println(repositoryAnimal.listAnimalsByCage());
+    }
+
+    public int getAnimalsInCage(Scanner input) {
+        input.nextLine();
+        int cageId = 0;
+        System.out.println("Enter cage ID: ");
+        String idString = input.nextLine();
+        if (idString.matches("^\\d*$")) {
+            cageId = Integer.parseInt(idString);
+        }
+        System.out.println("Animals in cage: " + repositoryAnimal.getAnimalsInCage(cageId));
+        return repositoryAnimal.getAnimalsInCage(cageId);
     }
 }

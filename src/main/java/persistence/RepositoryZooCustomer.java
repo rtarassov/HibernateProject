@@ -1,5 +1,6 @@
 package persistence;
 
+import model.Ticket;
 import model.ZooCustomer;
 import util.DBUtil;
 
@@ -104,4 +105,71 @@ public class RepositoryZooCustomer {
         }
     }
 
+    public List<ZooCustomer> listCustomersByZoo() {
+        List<ZooCustomer> list = null;
+        try {
+            list = entityManager.createQuery("FROM ZooCustomer ORDER BY Zoo").getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public Ticket getMostCommonTicket() {
+        RepositoryTicket repositoryTicket = new RepositoryTicket();
+
+        int singleTicketAmount = 0;
+        int familyTicketAmount = 0;
+        int adultTicketAmount = 0;
+        int childTicketAmount = 0;
+        int mostCommonTicketAmount;
+        Ticket mostCommonTicket;
+        int mostCommonTicketId;
+
+
+        // single
+        for (ZooCustomer zooCustomer : listAllCustomers()) {
+            if (zooCustomer.getTicket().getId() == 1) {
+                singleTicketAmount++;
+            }
+        }
+        mostCommonTicketAmount = singleTicketAmount;
+        mostCommonTicketId = 1;
+
+        // family
+        for (ZooCustomer zooCustomer : listAllCustomers()) {
+            if (zooCustomer.getTicket().getId() == 2) {
+                familyTicketAmount++;
+            }
+        }
+        if (mostCommonTicketAmount < familyTicketAmount) {
+            mostCommonTicketAmount = familyTicketAmount;
+            mostCommonTicketId = 2;
+        }
+
+        // adult
+        for (ZooCustomer zooCustomer : listAllCustomers()) {
+            if (zooCustomer.getTicket().getId() == 3) {
+                adultTicketAmount++;
+            }
+        }
+        if (mostCommonTicketAmount < adultTicketAmount) {
+            mostCommonTicketAmount = adultTicketAmount;
+            mostCommonTicketId = 3;
+        }
+
+        // child
+        for (ZooCustomer zooCustomer : listAllCustomers()) {
+            if (zooCustomer.getTicket().getId() == 4) {
+                childTicketAmount++;
+            }
+        }
+        if (mostCommonTicketAmount < childTicketAmount) {
+            mostCommonTicketAmount = childTicketAmount;
+            mostCommonTicketId = 4;
+        }
+        System.out.println("Most commonly bought ticket amount: " + mostCommonTicketAmount);
+        mostCommonTicket = repositoryTicket.findTicketById(mostCommonTicketId);
+        return mostCommonTicket;
+    }
 }

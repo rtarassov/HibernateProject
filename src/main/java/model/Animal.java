@@ -22,17 +22,6 @@ public class Animal {
     @JoinColumn(name = "cage_id")
     private Cage cage;
 
-    @Override
-    public String toString() {
-        return "Animal{" +
-                "id=" + animalId +
-                ", type='" + type + '\'' +
-                ", animalGrowthStage='" + animalGrowthStage + '\'' +
-                ", dateOfRegister=" + dateOfRegister +
-                ", cage=" + cage +
-                '}';
-    }
-
     public int getAnimalId() {
         return animalId;
     }
@@ -71,6 +60,14 @@ public class Animal {
         this.dateOfRegister = dateOfRegister;
     }
 
-    public Animal() {
+    public Animal() {}
+
+    @Override
+    public String toString() {
+        String cageType = cage != null ? cage.getType() : "No Cage assigned";
+        return "Animal type: " + type
+                + ", Growth " + animalGrowthStage
+                + ", Cage " + cageType
+                + ";\n";
     }
 }

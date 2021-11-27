@@ -21,6 +21,7 @@ public class EmployeeMenu {
         System.out.println("4: List all employees");
         System.out.println("5: Find employee by ID");
         System.out.println("6: Assign employee to zoo");
+        System.out.println("7: List employees by title");
         System.out.println("100 - Return to Main Menu");
         System.out.println("\n/***************************************************/");
         return input.nextInt();
@@ -49,6 +50,9 @@ public class EmployeeMenu {
                     break;
                 case 6:
                     assignEmployeeToZoo(input);
+                    break;
+                case 7:
+                    listEmployeesByTitle();
                     break;
                 case 100:
                     MainMenu.getMainMenu();
@@ -244,5 +248,9 @@ public class EmployeeMenu {
             System.out.println("Try again, enter only numbers.");
         }
         repositoryEmployee.assignEmployeeToZoo(employeeId, zooId);
+    }
+
+    public void listEmployeesByTitle() {
+        System.out.println(repositoryEmployee.listEmployeesByTitle().toString());
     }
 }

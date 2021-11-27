@@ -1,5 +1,6 @@
 package menu;
 
+import model.Ticket;
 import model.ZooCustomer;
 import persistence.RepositoryZooCustomer;
 
@@ -20,6 +21,8 @@ public class ZooCustomerMenu {
         System.out.println("4: List all ZooCustomers");
         System.out.println("5: Find ZooCustomer by ID");
         System.out.println("6: Number of customers");
+        System.out.println("7: List Customers by Zoo");
+        System.out.println("8: Most common ticket");
         System.out.println("100 - Return to Main Menu");
         System.out.println("\n/***************************************************/");
         return input.nextInt();
@@ -49,6 +52,12 @@ public class ZooCustomerMenu {
                     break;
                 case 6:
                     numberOfCustomers();
+                    break;
+                case 7:
+                    listCustomersByZooName();
+                    break;
+                case 8:
+                    getMostCommonTicket();
                     break;
                 case 100:
                     MainMenu.getMainMenu();
@@ -257,5 +266,14 @@ public class ZooCustomerMenu {
                 System.out.println("Invalid option, try again.");
                 break;
         }
+    }
+
+    public void listCustomersByZooName() {
+        System.out.println(repositoryZooCustomer.listCustomersByZoo());
+    }
+
+    public Ticket getMostCommonTicket() {
+        System.out.println("Most common ticket is: " + repositoryZooCustomer.getMostCommonTicket());
+        return repositoryZooCustomer.getMostCommonTicket();
     }
 }
