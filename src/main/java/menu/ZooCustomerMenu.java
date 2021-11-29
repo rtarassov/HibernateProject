@@ -51,7 +51,7 @@ public class ZooCustomerMenu {
                     findZooCustomerByIdMenu(input);
                     break;
                 case 6:
-                    numberOfCustomers();
+                    amountOfCustomers();
                     break;
                 case 7:
                     listCustomersByZooName();
@@ -172,10 +172,6 @@ public class ZooCustomerMenu {
         repositoryZooCustomer.deleteZooCustomer(zooCustomer);
     }
 
-    public void numberOfCustomers() {
-        System.out.println("Number of customers: " + repositoryZooCustomer.listAllCustomers().size());
-    }
-
     public void updateZooCustomer(Scanner input) {
         input.nextLine();
         int zooCustomerId;
@@ -275,5 +271,10 @@ public class ZooCustomerMenu {
     public Ticket getMostCommonTicket() {
         System.out.println("Most common ticket is: " + repositoryZooCustomer.getMostCommonTicket());
         return repositoryZooCustomer.getMostCommonTicket();
+    }
+
+    public Long amountOfCustomers() {
+        System.out.println("Registered customers: " + repositoryZooCustomer.amountOfCustomers());
+        return repositoryZooCustomer.amountOfCustomers();
     }
 }

@@ -172,4 +172,10 @@ public class RepositoryZooCustomer {
         mostCommonTicket = repositoryTicket.findTicketById(mostCommonTicketId);
         return mostCommonTicket;
     }
+
+    public Long amountOfCustomers() {
+        String sql = "SELECT count(*) FROM ZooCustomer";
+        Long customers = (Long) entityManager.createQuery(sql).getSingleResult();
+        return customers;
+    }
 }
